@@ -2,32 +2,31 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Worker } from './schemas/worker.schema';
+import { Worker } from './entities/worker.entity';
 import { Model } from 'mongoose';
-import { Speciality } from '../speciality/schemas/speciality.schema';
+import { Specialty } from '../speciality/entities/speciality.entity';
 
 @Injectable()
 export class WorkerService {
   constructor(
     @InjectModel(Worker.name) private workerModel: Model<Worker>,
-    @InjectModel(Speciality.name) private specModel: Model<Speciality>,
+    @InjectModel(Specialty.name) private specModel: Model<Specialty>,
   ) {}
 
   async create(createWorkerDto: CreateWorkerDto) {
-    const { speciality_id } = createWorkerDto;
-    const spec = await this.specModel.findById(speciality_id);
+    const { specialty_id } = createWorkerDto;
+    const spec = await this.specModel.findById(specialty_id);
 
     if (!spec) {
-      throw new BadRequestException('Bunday spec yoq');
+      throw new BadRequestException('no specialty');
     }
 
     const worker = await this.workerModel.create(createWorkerDto);
-
     return worker;
   }
 
   findAll() {
-    return this.workerModel.find().populate('speciality_id');
+    return this.workerModel.find().populate('specialty_id');
   }
 
   findOne(id: number) {

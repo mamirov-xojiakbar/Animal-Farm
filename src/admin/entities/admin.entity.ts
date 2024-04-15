@@ -8,7 +8,7 @@ export class Admin {
   @Prop()
   full_name: string;
 
-  @Prop({ required: true })
+  @Prop({required:true})
   email: string;
 
   @Prop()
@@ -17,16 +17,16 @@ export class Admin {
   @Prop()
   tg_link: string;
 
-  @Prop({ required: true })
-  hashed_password: string;
+  @Prop({required: true})
+  password: string;
 
   @Prop()
-  hashed_refresh_token: string;
+  token: string;
 
-  @Prop({ default: true })
+  @Prop({default: true})
   is_active: boolean;
 
-  @Prop({ default: false })
+  @Prop({default: false})
   is_creator: boolean;
 
   @Prop()

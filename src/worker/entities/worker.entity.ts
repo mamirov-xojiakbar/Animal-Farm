@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Speciality } from '../../speciality/schemas/speciality.schema';
+import { Specialty } from '../../speciality/entities/speciality.entity';
 
 export type WorkerDocument = HydratedDocument<Worker>;
 
 @Schema({ versionKey: false })
 export class Worker {
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop()
   age: number;
 
   @Prop()
@@ -24,17 +24,17 @@ export class Worker {
   @Prop()
   password: string;
 
-  @Prop([String])
+  @Prop()
   worker_schedule: string[];
+
+  @Prop()
+  token: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Speciality',
+    ref: 'Specialty',
   })
-  speciality_id: Speciality;
-
-  @Prop()
-  hashed_token: string;
+  specialty_id: Specialty;
 }
 
 export const WorkerSchema = SchemaFactory.createForClass(Worker);

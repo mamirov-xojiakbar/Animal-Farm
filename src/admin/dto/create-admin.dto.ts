@@ -5,5 +5,6 @@ export class CreateAdminDto {
   tg_link: string;
   password: string;
   confirm_password: string;
+  is_creator: boolean;
   description: string;
 }
